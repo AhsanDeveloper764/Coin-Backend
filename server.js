@@ -13,15 +13,16 @@ const port = process.env.PORT || PORT || 3000;
 // }
 
 // app.use(cors(corsOption))
-app.use(
-    cors({
-        origin:function(origin,callback){
-            return callback(null,true);
-        },
-        optionsSuccessStatus:200,
-        credentials:true,
-    })
-)
+const corsOptions = {
+  origin: "https://coin-frontend-app.onrender.com",
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions)); 
+
 app.use(express.json({limit:"50mb"}));
 app.use(cookieParser());
 app.get("/", (req, res) => {
