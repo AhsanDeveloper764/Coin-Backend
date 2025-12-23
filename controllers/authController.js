@@ -75,12 +75,16 @@ const authController = {
         // ab hum cookie ma apnay token send kreingay
         resp.cookie("accessToken",accessToken,{
             maxAge: 1000 * 60 * 60 * 24,
-            httpOnly:true
+            httpOnly:true,
+            sameSite:"None",
+            secure:true
         })
 
         resp.cookie("refreshToken",refreshToken,{
             maxAge: 1000 * 60 * 60 * 24,
             httpOnly:true,
+            sameSite:"None",
+            secure:true
         })
 
         //  Finally return responce
@@ -146,12 +150,16 @@ const authController = {
         resp.cookie("accessToken", accessToken, {
             maxAge: 1000 * 60 * 60 * 24,
             httpOnly: true,
+            sameSite:"None",
+            secure:true
         })
         // Tokens ko cookies me save karte hain taake frontend ko bar bar bhejne ki zarurat na ho.
         // httpOnly: true → iska matlab ye cookies browser JS se access nahi kar sakta (security ke liye).
         resp.cookie("refreshToken",RefreshTokenNew,{
             maxAge:1000 * 60 * 60 * 24,
             httpOnly:true,
+            sameSite:"None",
+            secure:true
         })
         const dto = new UserDto(user)
         return resp.status(201).json({Data:dto,auth:true})
@@ -209,11 +217,15 @@ const authController = {
             
             resp.cookie("accessToken",accessToken,{
                 maxAge: 1000 * 60 * 60 * 24,
-                httpOnly:true
+                httpOnly:true,
+                sameSite:"None",
+                secure:true
             })
             resp.cookie("refreshToken",refToken,{
                 maxAge: 1000 * 60 * 60 * 24,
-                httpOnly:true
+                httpOnly:true,
+                sameSite:"None",
+                secure:true
             })
         }
         catch(error){
