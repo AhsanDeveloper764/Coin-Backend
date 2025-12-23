@@ -6,7 +6,7 @@ const {PORT} = require("./config/index")
 const router = require("./routes/index")
 const cookieParser   = require("cookie-parser");
 const errorHandler = require("./middlewares/errorHandle")
-
+const port = process.env.PORT || PORT || 3000;
 // const corsOption = {
 //     credentials:true,
 //     origin:['http://localhost:5173']
@@ -24,10 +24,15 @@ app.use(
 )
 app.use(express.json({limit:"50mb"}));
 app.use(cookieParser());
+app.get("/", (req, res) => {
+  res.status(200).send("Coin Bounce Backend is Live");
+});
 app.use(router)
 app.use("/storage",express.static("storage")) // ye middleware use krkay hum apni imag ko access krsktay hein
 dbConnect()
 
 // isko humnay end ma isliye registered krwaya hay ku kay jintay bhi middlewares hotay hein wo sequentially run hotay hein
 app.use(errorHandler)
-app.listen(PORT,console.log("Server is Running on Port",PORT))
+app.listen(port, () => {
+  console.log("Server is Running on Port", port);
+});
