@@ -23,6 +23,7 @@ app.use(
     credentials: true,
   })
 );
+
 app.use(express.json({limit:"50mb"}));
 app.use(router)
 app.use("/storage",express.static("storage")) // ye middleware use krkay hum apni imag ko access krsktay hein
