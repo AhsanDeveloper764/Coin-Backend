@@ -29,7 +29,6 @@
 // // isko humnay end ma isliye registered krwaya hay ku kay jintay bhi middlewares hotay hein wo sequentially run hotay hein
 // app.listen(PORT, console.log(`Backend is running on port: ${PORT}`));
 
-
 const express = require("express");
 const cors = require("cors");
 const dbConnect = require("./db/index");
@@ -40,32 +39,26 @@ const errorHandler = require("./middlewares/errorHandle");
 
 const app = express();
 
-const allowedOrigins = [
-  "https://coin-frontend-app.onrender.com"
-];
-
 app.use(cookieParser());
 
+// ✅ SIMPLE + WORKING CORS
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: "https://coin-frontend-app.onrender.com",
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
-app.options("*", cors());
+// ✅ Preflight fix
+app.options(
+  "*",
+  cors({
+    origin: "https://coin-frontend-app.onrender.com",
+    credentials: true,
+  })
+);
 
 app.use(express.json({ limit: "50mb" }));
-
 app.use("/storage", express.static("storage"));
 app.use(router);
 
@@ -76,7 +69,6 @@ app.use(errorHandler);
 app.listen(PORT, () =>
   console.log(`Backend is running on port ${PORT}`)
 );
-
 
 
 // const corsOption = {
