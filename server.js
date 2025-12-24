@@ -30,29 +30,33 @@ const errorHandler = require("./middlewares/errorHandle")
 // app.listen(PORT, console.log(`Backend is running on port: ${PORT}`));
 
 const app = express();
-
 app.use(cookieParser());
-
 // app.use(cors(corsOptions));
+const allowedOrigins = [
+  "https://coin-frontend-app.onrender.com",
+  "http://localhost:5173"
+];
 
 app.use(
   cors({
     origin: function (origin, callback) {
-      return callback(null, true);
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        callback(null, origin);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
     },
-    optionsSuccessStatus: 200,
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-
+app.options("*", cors());
 app.use(express.json({ limit: "50mb" }));
-
 app.use(router);
-
 dbConnect();
-
 app.use("/storage", express.static("storage"));
-
 app.use(errorHandler);
-
 app.listen(PORT, console.log(`Backend is running on port: ${PORT}`));
