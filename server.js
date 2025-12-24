@@ -5,6 +5,7 @@ const {PORT} = require("./config/index")
 const router = require("./routes/index")
 const cookieParser   = require("cookie-parser");
 const errorHandler = require("./middlewares/errorHandle")
+
 // const corsOption = {
 //     credentials:true,
 //     origin:['http://localhost:5173']
@@ -31,6 +32,4 @@ dbConnect()
 
 app.use(errorHandler)
 // isko humnay end ma isliye registered krwaya hay ku kay jintay bhi middlewares hotay hein wo sequentially run hotay hein
-app.listen(port, () => {
-  console.log("Server is Running on Port", port);
-});
+app.listen(PORT, console.log(`Backend is running on port: ${PORT}`));
