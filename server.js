@@ -9,7 +9,7 @@ const errorHandler = require("./middlewares/errorHandle")
 const app = express();
 app.use(cookieParser());
 
-app.use(cors(corsOption))
+// app.use(cors(corsOption))
 app.use(
   cors({
     origin: function (origin, callback) {
